@@ -45,7 +45,7 @@ export class NavComponent implements OnInit {
   }
 
   public getProfile() {
-    this.authService.profile(this.token).subscribe((profile) => {
+    this.authService.profile()?.subscribe((profile) => {
       console.log(profile);
       this.user = profile;
     });
@@ -57,7 +57,7 @@ export class NavComponent implements OnInit {
       .pipe(
         switchMap((token) => {
           this.token = token.access_token;
-          return this.authService.profile(this.token);
+          return this.authService.profile()!;
         })
       )
       .subscribe((user) => {

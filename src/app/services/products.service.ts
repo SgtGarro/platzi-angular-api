@@ -12,6 +12,9 @@ import {
   Product,
   UpdateProductDTO,
 } from '../model/product.model';
+
+import { checkTime } from '../interceptors/time.interceptor';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,17 +30,19 @@ export class ProductsService {
       params = params.set('limit', limit);
       params = params.set('offset', offset);
     }
-    return this.http.get<Product[]>(this.API_URL, { params }).pipe(
-      retry(3),
-      map((products) =>
-        products.map((product) => {
-          return {
-            ...product,
-            taxes: product.price * 0.19,
-          };
-        })
-      )
-    );
+    return this.http
+      .get<Product[]>(this.API_URL, { params, context: checkTime() })
+      .pipe(
+        retry(3),
+        map((products) =>
+          products.map((product) => {
+            return {
+              ...product,
+              taxes: product.price * 0.19,
+            };
+          })
+        )
+      );
   }
 
   public getProduct(id: string | number) {
