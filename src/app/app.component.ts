@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from './model/user.model';
 import { AuthService } from './services/auth.service';
+import { FilesService } from './services/files.service';
 import { UsersService } from './services/users.service';
 @Component({
   selector: 'app-root',
@@ -11,10 +12,12 @@ export class AppComponent {
   public title = 'my-store';
   public token: string;
   public user: User;
+  public imgRta: string;
 
   constructor(
     private usersService: UsersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private filesService: FilesService
   ) {
     this.token = '';
     this.user = {
@@ -23,6 +26,7 @@ export class AppComponent {
       email: 'example@mail.com',
       password: '12345',
     };
+    this.imgRta = '';
   }
 
   public createUser() {
@@ -49,6 +53,26 @@ export class AppComponent {
     this.authService.profile()?.subscribe((profile) => {
       console.log(profile);
       this.user = profile;
+    });
+  }
+
+  public downloadPDF() {
+    this.filesService
+      .getFile(
+        'my-file.pdf',
+        'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',
+        'application/pdf'
+      )
+      .subscribe();
+  }
+
+  public onUpload(event: Event) {
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0);
+    if (!file) return;
+
+    this.filesService.uploadFile(file).subscribe((rta) => {
+      this.imgRta = rta.location;
     });
   }
 }

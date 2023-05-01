@@ -2,6 +2,17 @@
 <button type="button" (click)="createUser()">Create user</button>
 <button type="button" (click)="login()">Login</button>
 <button type="button" (click)="getProfile()">Get Profile</button>
+<div>
+  <a href="./../assets/files/example.txt" download>Descargar archivo</a>
+</div>
+<div>
+  <button (click)="downloadPDF()" type="button">Descargar PDF</button>
+</div>
+<div>
+  <input type="file" (change)="onUpload($event)" />
+  <img *ngIf="imgRta" [src]="imgRta" alt="" />
+</div>
+<hr />
 <div class="container">
   <app-products></app-products>
 </div>
