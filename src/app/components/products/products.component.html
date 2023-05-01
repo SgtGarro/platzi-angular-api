@@ -1,0 +1,39 @@
+<button type="button" (click)="onShowDetail('12313')">Detail not found</button>
+<button type="button" (click)="createNewProduct()">Create product</button>
+<button type="button" (click)="loadMoreProducts()">Load more</button>
+<p style="font-size: 3rem; font-weight: 600">{{ statusDetail }}</p>
+<div class="products-container">
+  <app-product
+    *ngFor="let product of productsList"
+    [product]="product"
+    (addedProduct)="onAddToShoppingCart($event)"
+    (showProduct)="onShowDetail($event)"
+  ></app-product>
+</div>
+
+<div class="product-detail" [class.active]="showProductsDetail">
+  <div *ngIf="productChosen">
+    <button
+      class="product-detail-close"
+      type="button"
+      (click)="toggleProductDetail()"
+    >
+      <img src="../../../assets/icons/icon_close.png" alt="" />
+    </button>
+
+    <swiper [slidesPerView]="1">
+      <ng-template swiperSlide *ngFor="let img of productChosen.images">
+        <img class="product-detail-img" [src]="img" alt="" />
+      </ng-template>
+    </swiper>
+    <div class="product-detail-content">
+      <p class="product-detail-price">
+        {{ productChosen.price | currency : "PEN" }}
+      </p>
+      <p class="product-detail-title">{{ productChosen.title }}</p>
+      <p class="product-detail-description">{{ productChosen.description }}</p>
+      <button (click)="updateProduct()" type="button">Edit product</button>
+      <button (click)="deleteProduct()" type="button">Delete</button>
+    </div>
+  </div>
+</div>

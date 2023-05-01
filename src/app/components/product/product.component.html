@@ -1,0 +1,13 @@
+<div class="product-content">
+  <div class="product-img">
+    <app-img *ngIf="product.images.length" [img]="product.images[0]"></app-img>
+  </div>
+  <p class="product-price">{{ product.price | currency : "PEN" }}</p>
+  <p class="product-price">
+    {{ product.taxes?.toFixed(2) | currency : "PEN" }}
+  </p>
+  <p class="product-title">{{ product.title | uppercase }}</p>
+  <p appHighlight class="product-description">{{ product.description }}</p>
+  <button (click)="onShowDetail()">View details</button>
+  <button (click)="onAddToCart()">Add</button>
+</div>

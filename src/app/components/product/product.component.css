@@ -1,0 +1,18 @@
+.product-content {
+  font-family: "Roboto", sans-serif;
+}
+.product-img {
+  margin-bottom: 2rem;
+}
+.product-title {
+  margin-bottom: 0.8rem;
+  font-size: 1.6rem;
+  color: #343a40;
+  font-weight: 300;
+}
+.product-price {
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  font-size: 2.4rem;
+  color: #212529;
+}
